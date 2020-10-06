@@ -25,7 +25,19 @@ Authors: Jessica Benson, Lori Henderson, Ken Stephens and John Wilkinson.
 
 Credits for any photos, clip-art or CSS templates, etc. we use go here.
 
-Shout-outs to anyone who helped us, instructors, classmates, etc.
+Shout-outs to anyone who helped us on the project, instructors, classmates, etc.
+
+## Acknowledgements
+
+Each of us can take a paragraph or two here to offer special thanks and dedications to anyone we want -- folks from Kenzie or our families, etc. 
+
+Jess:
+
+Lori:
+
+Ken:
+
+John:
 
 ## Requirements
 
