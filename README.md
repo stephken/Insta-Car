@@ -1,6 +1,12 @@
 # Welcome to InstaCar, our awesome Capstone project!
 
-This is our final project for Kenzie Academy, a group effort. We are creating an Instagram-like photo-sharing service, geared specifically for car enthusiasts.
+To get project up and running, see dependencies below, and in pyproject.toml -- note there are a couple extras we need in order to deal with photo uploads.
+
+Also, I am committing the media/images folders to start out. You will need those folders on your local versions to get started. But once you have it locally, then we will want to gitignore it, at least for now.
+
+And on to the fun parts...
+
+This is our final project for Kenzie Academy, a group effort. Woot Woot! We are creating an Instagram-like photo-sharing service, geared specifically for car enthusiasts.
 
 ## Features
 

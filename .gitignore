@@ -10,8 +10,8 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
-# photos etc. 
-media
+# UNCOMMENT THIS LINE BELOW:
+# media
 
 # secret key
 secret_key.py
