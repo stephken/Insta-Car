@@ -24,9 +24,15 @@ Shout-outs to anyone who helped us, instructors, classmates, etc.
 ## Requirements
 
 python = "^3.8"
+
 django = "^3.1.2"
+
 poetry >= "0.12"
+
 build-backend = "poetry.masonry.api"
+
 django-cleanup==5.0.0
+
 Pillow==7.2.0
+
 django-rotate-secret-key==0.3
