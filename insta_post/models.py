@@ -11,6 +11,7 @@ class FavoriteCar(models.Model):
     up_votes = models.IntegerField(default=0)
     down_votes = models.IntegerField(default=0)
     total_votes = models.IntegerField(default=0)
+    car_image = models.ImageField(upload_to='images/', null=True, blank=True)
 
     def __str__(self):
         return self.make, self.model, self.year, self.color, self.time_posted
