@@ -1,19 +1,14 @@
 # Welcome to InstaCar, our awesome Capstone project!
 
-To get project up and running, see dependencies below, and in pyproject.toml -- note there are a couple extras we need in order to deal with photo uploads.
-
-Also, I am committing the media/images folders to start out. You will need those folders on your local versions to get started. But once you have it locally, then we will want to gitignore it, at least for now.
-
-And on to the fun parts...
-
 This is our final project for Kenzie Academy, a group effort. Woot Woot! We are creating an Instagram-like photo-sharing service, geared specifically for car enthusiasts.
 
 ## Features
 
-Will add to this section as we add features...
+Once complete, users will be able to create accounts, and upload photos of their favorite cars to share with other car enthusiasts. From hot rods to Volkswagens to Teslas -- all cars are welcome at Insta-Car!
 
-With photos!
+We hope to have the ability to search through the database of photos for specific car models.
 
+Perhaps users will be able to message each other?
 
 ## Work in progress
 
@@ -47,10 +42,9 @@ django = "^3.1.2"
 
 poetry >= "0.12"
 
-build-backend = "poetry.masonry.api"
+django-cleanup = "^5.1.0"
 
-django-cleanup==5.0.0
+pillow = "^7.2.0"
 
-Pillow==7.2.0
+django-rotate-secret-key = "^0.3"
 
-django-rotate-secret-key==0.3
