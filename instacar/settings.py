@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'authentication',
     'insta_user',
+    'insta_post',
 ]
 
 MIDDLEWARE = [
