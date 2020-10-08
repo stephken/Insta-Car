@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import date
+from insta_user.models import InstaUser
 
 
 class FavoriteCar(models.Model):

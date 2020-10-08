@@ -1,1 +1,34 @@
-{% extends "base.html" %} {% block content %} {% endblock %}
+{% extends "base.html" %} {% block content %}
+<div>
+  <nav>
+    <a href="/">Home</a>
+  </nav>
+</div>
+
+<div>
+  {% if car.car_image %}
+  <img
+    class="img-thumbnail"
+    src="{{ car.car_image.url }}"
+    alt="{{ car.model }}"
+    style="width: 300px; max-height: 600px"
+  />
+  {% else %}
+  <img
+    class="img-thumbnail"
+    src="/static/images/fillerphoto.png"
+    alt="{{ car.model }}"
+    style="width: 300px; max-height: 600px"
+  />
+  {% endif %}
+
+  <p>Posted: {{ car.time_posted}}</p>
+  <p>Make: {{car.make}}</p>
+  <p>Model: {{car.model}}</p>
+  <p>Color: {{car.color}}</p>
+  <p>Year: {{car.year}}</p>
+  <p>Thumb's up: {{ car.total_votes}}</p>
+  <p><a href="/upvote/{{ car.id }}/">Thumb's up</a></p>
+  <p><a href="/downvote/{{ car.id }}/">Thumb's down</a></p>
+</div>
+{% endblock %}
