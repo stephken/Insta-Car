@@ -28,9 +28,11 @@
   <p>Color: {{car.color}}</p>
   <p>Year: {{car.year}}</p>
   <p>Thumb's up: {{ car.total_votes}}</p>
-  <p><a href="/upvote/{{ car.id }}/">Thumb's up</a></p>
-  <p><a href="/downvote/{{ car.id }}/">Thumb's down</a></p>
-  <p><a href="newcomment/">Add a comment</a></p>
+  <button><a href="/upvote/{{ car.id }}/">Thumb's up</a></button>
+  <button>
+    <a href="/downvote/{{ car.id }}/">Thumb's down</a>
+  </button>
+  <button><a href="newcomment/">Add a comment</a></button>
 </div>
 <div>
   {% for comment in comment_list %}
