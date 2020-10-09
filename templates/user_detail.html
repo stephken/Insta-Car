@@ -29,21 +29,11 @@
       {% endif %}
     </div>
   </br>
-  
+  <div>
     <i>InstaCar member since: {{ info.joined_date }}</i>
+    <p>My website: {{info.website}}</p>
     <p>About me: {{info.bio}}</p>
-  
-    {% if request.user.id == info.id %}
-    <a class="glyphicon glyphicon-pencil" href="edit/"></a>
-    <a class="glyphicon glyphicon-trash" href="remove/" onclick="return confirm('Are you sure you want to delete this profile?')"></a>
     {% endif %}
-  </br>
-  </br>
-  </br>
-    
-        {% endif %}
-  </br>
-  <p>-----------------------------------</p>
-    
+</div>
   </div>
 {% endblock %}
