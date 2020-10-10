@@ -40,24 +40,29 @@
 <div>
   {% for car in cars %} {% if car.car_image %}
   <a href="/post/{{car.id}}/">
-  <img
-    class="img-thumbnail"
-    src="{{ car.car_image.url }}"
-    alt="{{ car.model }}"
-    style="width: 50px; max-height: 80px"
-  />
+    <img
+      class="img-thumbnail"
+      src="{{ car.car_image.url }}"
+      alt="{{ car.model }}"
+      style="width: 50px; max-height: 80px"
+    />
   </a>
   {% else %}
-  <img
-    class="img-thumbnail"
-    src="/static/images/fillerphoto.png"
-    alt="{{ car.model }}"
-    style="width: 40px; max-height: 80px"
-  />
+  <a href="/post/{{car.id}}/">
+    <img
+      class="img-thumbnail"
+      src="/static/images/fillerphoto.png"
+      alt="{{ car.model }}"
+      style="width: 40px; max-height: 80px"
+  /></a>
   {% endif %}
   <p>{{car.year}} {{car.model}}</p>
+  <p>{{car.caption}}</p>
   <p>Thumb's up: {{ car.total_votes}}</p>
-
+  <button><a href="/upvote/{{ car.id }}/">Thumb's up</a></button>
+  <button>
+    <a href="/downvote/{{ car.id }}/">Thumb's down</a>
+  </button>
   {% endfor %}
 </div>
 
