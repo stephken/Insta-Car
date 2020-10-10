@@ -39,12 +39,14 @@
 </div>
 <div>
   {% for car in cars %} {% if car.car_image %}
+  <a href="/post/{{car.id}}/">
   <img
     class="img-thumbnail"
     src="{{ car.car_image.url }}"
     alt="{{ car.model }}"
     style="width: 50px; max-height: 80px"
   />
+  </a>
   {% else %}
   <img
     class="img-thumbnail"

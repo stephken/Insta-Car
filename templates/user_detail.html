@@ -10,7 +10,7 @@
     <h2>The user you are looking for does not exist</h2>
     {% else %}
     <h1>{{ info.username }}</h1>
-  
+    {{ info }}
     <div>
       {% if info.profile_image %}
       <img
@@ -33,6 +33,21 @@
     <i>InstaCar member since: {{ info.joined_date }}</i>
     <p>My website: {{info.website}}</p>
     <p>About me: {{info.bio}}</p>
+    <h1>My Uploads</h1>
+    {% if my_uploads %}
+    {% for uploads in my_uploads %}
+    <a href="/post/{{uploads.id}}/">
+    <img
+    class="img-thumbnail"
+    src="{{ uploads.car_image.url }}"
+    alt="morty"
+    style="width: 50px; max-height: 80px"
+    />
+  </a>
+    {% endfor %}
+    {% else %}
+    <h1>You have not uploaded and cars yet</h1>
+    {% endif %}
     {% endif %}
 </div>
   </div>
