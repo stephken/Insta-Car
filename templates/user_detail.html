@@ -33,20 +33,31 @@
     <i>InstaCar member since: {{ info.joined_date }}</i>
     <p>My website: {{info.website}}</p>
     <p>About me: {{info.bio}}</p>
-    <h1>My Uploads</h1>
+    <h3>My Uploads</h3>
     {% if my_uploads %}
     {% for uploads in my_uploads %}
+    {% if uploads.car_image %}
     <a href="/post/{{uploads.id}}/">
     <img
     class="img-thumbnail"
     src="{{ uploads.car_image.url }}"
-    alt="morty"
+    alt="{{uploads.model}}"
     style="width: 50px; max-height: 80px"
     />
   </a>
+  {% else %}
+  <a href="/post/{{uploads.id}}/">
+    <img
+      class="img-thumbnail"
+      src="/static/images/fillerphoto.png"
+      alt="{{ uploads.model }}"
+      style="width: 50px; max-height: 80px"
+    /></a>
+
+{% endif %}
     {% endfor %}
     {% else %}
-    <h1>You have not uploaded and cars yet</h1>
+    <h4>You have not uploaded any cars yet</h4>
     {% endif %}
     {% endif %}
 </div>
