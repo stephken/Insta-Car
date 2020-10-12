@@ -57,12 +57,7 @@ def del_post(request, post_id):
     post = FavoriteCar.objects.get(id=post_id)
     post.delete()
     return redirect('profile', request.user.username)
-'''
-def del_comment(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
-    comment.delete()
-    return redirect('post', comment.post.id)
-'''
+
 def del_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     if request.user.id == comment.commenter.id:
