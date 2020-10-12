@@ -18,9 +18,9 @@ urlpatterns = [
     path('post/<int:post_id>/', photo_detail, name="post"),
     path('post/<int:post_id>/newcomment/', comment_form_view),
     path('admin/', admin.site.urls),
-    path('<str:username>/', profile_view, name='profile'),
     path('<str:username>/edit/', profile_edit_view, name='profile_edit'),
     path('<str:username>/delete/', del_user, name='delete'),
+    path('<str:username>/', profile_view, name='profile'),
 
 ]
 if settings.DEBUG:
