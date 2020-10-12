@@ -4,7 +4,7 @@ from insta_post.models import FavoriteCar
 from insta_user.forms import EditProfileForm
 from django.shortcuts import render, HttpResponseRedirect, reverse
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     data = InstaUser.objects.all()

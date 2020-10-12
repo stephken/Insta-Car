@@ -1,7 +1,9 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse, get_object_or_404, redirect
 from insta_user.models import InstaUser
 from insta_post.models import FavoriteCar, Comment
-from insta_post.forms import PostForm, CommentForm
+from insta_post.forms import PostForm, CommentForm, EditPostForm, EditCommentForm
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 def index(request):
@@ -13,7 +15,7 @@ def post_form_view(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.cleaned_data
-            FavoriteCar.objects.create(poster=data.get('poster'), make=data.get('make'), model=data.get('model'), year=data.get('year'), color=data.get('color'), caption=data.get('caption'), car_image=data.get('car_image'))
+            FavoriteCar.objects.create(poster=request.user, make=data.get('make'), model=data.get('model'), year=data.get('year'), color=data.get('color'), caption=data.get('caption'), car_image=data.get('car_image'))
             return HttpResponseRedirect(reverse("homepage"))
     form = PostForm()
     return render(request, "generic_form.html", {"form": form})
@@ -26,6 +28,7 @@ def comment_form_view(request, post_id):
             data = form.cleaned_data
             comment = form.save(commit=False)
             comment.post = post
+            comment.commenter = request.user
             comment.save()
             return redirect('post', post.id)
     else:
@@ -49,3 +52,45 @@ def down_vote(request, post_id):
     vote.save()
     return redirect(request.META.get('HTTP_REFERER'))
 
+def del_post(request, post_id):
+    post = FavoriteCar.objects.get(id=post_id)
+    post.delete()
+    return redirect('profile', request.user.username)
+
+def del_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.delete()
+    # return redirect('post_detail', pk=comment.post.pk)
+    return redirect('post', comment.post.id)
+
+def edit_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    if request.method == "POST":
+        form = EditCommentForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            comment.content = data.get('content')
+            comment.save()
+    # return redirect('post_detail', pk=comment.post.pk)
+            # return redirect('post', comment.post.id)
+            return redirect('post', comment.post.id)
+    form = EditCommentForm()
+    return render(request, 'generic_form.html', {'form': form} )
+
+def post_edit_view(request, post_id):
+    post = FavoriteCar.objects.get(id=post_id)
+    if request.method == "POST":
+        form = EditPostForm(request.POST)
+        if form.is_valid():
+                data = form.cleaned_data
+                post.make = data.get('make')
+                post.model = data.get('model')
+                post.year = data.get('year')
+                post.color = data.get('color')
+                if 'car_image' in request.FILES:
+                    post.car_image = request.FILES['car_image']
+                post.save()
+                return HttpResponseRedirect(reverse('homepage'))
+
+    form = EditPostForm()
+    return render(request, 'generic_form.html', {'form': form} )
