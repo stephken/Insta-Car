@@ -57,26 +57,36 @@ def del_post(request, post_id):
     post = FavoriteCar.objects.get(id=post_id)
     post.delete()
     return redirect('profile', request.user.username)
-
+'''
 def del_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
-    # return redirect('post_detail', pk=comment.post.pk)
     return redirect('post', comment.post.id)
+'''
+def del_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    if request.user.id == comment.commenter.id:
+        comment.delete()
+        return redirect('post', comment.post.id)
+    else: 
+        return HttpResponseForbidden("You do not have permission to delete this comment")
 
 def edit_comment(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
-    if request.method == "POST":
-        form = EditCommentForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            comment.content = data.get('content')
-            comment.save()
-    # return redirect('post_detail', pk=comment.post.pk)
-            # return redirect('post', comment.post.id)
-            return redirect('post', comment.post.id)
-    form = EditCommentForm()
-    return render(request, 'generic_form.html', {'form': form} )
+    comment = get_object_or_404(Comment, pk=pk) 
+    if request.user.id == comment.commenter.id:
+        if request.method == "POST":
+            form = EditCommentForm(request.POST, instance=comment)
+            if form.is_valid():
+                data = form.cleaned_data
+                comment.content = data.get('content')
+                comment.save()
+                return redirect('post', comment.post.id)
+        else:
+            form = EditCommentForm(instance=comment)
+        return render(request, 'generic_form.html', {'form': form})
+    else: 
+        return HttpResponseForbidden("You do not have permission to edit this comment")
+    
 
 def post_edit_view(request, post_id):
     post = FavoriteCar.objects.get(id=post_id)
