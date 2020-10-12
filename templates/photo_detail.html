@@ -35,12 +35,21 @@
   </button>
   <button><a href="newcomment/">Add a comment</a></button>
 </div>
+{% if request.user.id == car.poster.id %}
+<a href="/post/{{car.id}}/edit/" style="color: black">Edit Post</a>
+<a href="/post/{{car.id}}/delete/" style="color: black">Delete post</a>
+{% endif %}
+
 <div>
   {% for comment in comment_list %}
   <div>
     <div>{{ comment.created_on }}</div>
     <strong>{{ comment.commenter }}</strong>
     <p>{{ comment.content|linebreaks }}</p>
+    {% if request.user.id == car.poster.id or request.user.id == comment.commenter.id%}
+    <a href='/comment/{{comment.id}}/delete'>Delete Comment</a>
+    <a href='/comment/{{comment.id}}/edit'>Edit Comment</a>
+    {% endif %}
   </div>
   {% empty %}
   <p>No comments here yet :(</p>

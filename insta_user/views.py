@@ -5,7 +5,7 @@ from insta_user.forms import EditProfileForm
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, reverse, redirect
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     data = InstaUser.objects.all()
