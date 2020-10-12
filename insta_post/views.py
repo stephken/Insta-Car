@@ -55,8 +55,11 @@ def down_vote(request, post_id):
 
 def del_post(request, post_id):
     post = FavoriteCar.objects.get(id=post_id)
-    post.delete()
-    return redirect('profile', request.user.username)
+    if request.user.id == post.poster.id:
+        post.delete()
+        return redirect('profile', request.user.username)
+    else: 
+        return HttpResponseForbidden("You do not have permission to delete this post")
 
 def del_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
