@@ -11,6 +11,10 @@
     {% else %}
     <h1>{{ info.username }}</h1>
     {{ info }}
+    {% if request.user.id == info.id %}
+    <a href='/{{info.username}}/edit/' style="color: black">Edit Profile</a>
+    <a href='/{{info.username}}/delete/' style="color: black">Delete Profile</a>
+    {% endif %}
     <div>
       {% if info.profile_image %}
       <img
