@@ -96,6 +96,7 @@ def post_edit_view(request, post_id):
                 post.make = data.get('make')
                 post.model = data.get('model')
                 post.year = data.get('year')
+                post.caption = data.get('caption')
                 post.color = data.get('color')
                 if 'car_image' in request.FILES:
                     post.car_image = request.FILES['car_image']
