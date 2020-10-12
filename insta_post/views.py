@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse, get_object_or_404, redirect
+from django.http import HttpResponseForbidden
 from insta_user.models import InstaUser
 from insta_post.models import FavoriteCar, Comment
 from insta_post.forms import PostForm, CommentForm, EditPostForm, EditCommentForm
@@ -79,9 +80,10 @@ def edit_comment(request, pk):
 
 def post_edit_view(request, post_id):
     post = FavoriteCar.objects.get(id=post_id)
-    if request.method == "POST":
-        form = EditPostForm(request.POST)
-        if form.is_valid():
+    if post.poster == request.user:
+        if request.method == "POST":
+            form = EditPostForm(request.POST, instance=post)
+            if form.is_valid():
                 data = form.cleaned_data
                 post.make = data.get('make')
                 post.model = data.get('model')
@@ -90,7 +92,10 @@ def post_edit_view(request, post_id):
                 if 'car_image' in request.FILES:
                     post.car_image = request.FILES['car_image']
                 post.save()
-                return HttpResponseRedirect(reverse('homepage'))
-
-    form = EditPostForm()
-    return render(request, 'generic_form.html', {'form': form} )
+                return redirect('post', post_id)
+        else:
+            form = EditPostForm(instance=post)
+        return render(request, 'generic_form.html', {'form': form})
+    else: 
+        return HttpResponseForbidden("You do not have permission to edit this post")
+    
