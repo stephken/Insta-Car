@@ -39,6 +39,9 @@ def profile_edit_view(request, username):
 
 def del_user(request, username):    
     u = InstaUser.objects.get(username=username)
-    u.delete()
-    messages.success(request, "The user is deleted")
-    return render(request, 'index.html')
+    if u.username == request.user.username:
+        u.delete()
+        messages.success(request, "The user is deleted")
+        return render(request, 'index.html')
+    else: 
+        return HttpResponseForbidden("You do not have permission to delete this user")
