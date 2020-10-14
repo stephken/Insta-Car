@@ -1,27 +1,22 @@
-{% extends "base.html" %} {% block content %} 
-<div>
-    <nav>
-      <a href="/">Home</a>
-    </nav>
-  </div>
-  
-<div>
+{% extends "base.html" %}
+{% block nav %} 
+{% include 'navbar.html' %}
+{% endblock %}
+{% block content %} 
+
+  <div class=" border-bottom white">
     {% if not info %}
     <h2>The user you are looking for does not exist</h2>
     {% else %}
-    <h1>{{ info.username }}</h1>
-    {{ info }}
-    {% if request.user.id == info.id %}
-    <a href='/{{info.username}}/edit/' style="color: black">Edit Profile</a>
-    <a href='/{{info.username}}/delete/' style="color: black">Delete Profile</a>
-    {% endif %}
-    <div>
-      {% if info.profile_image %}
+    <div class="row" id="profiletop">
+      <div class="col-4 prof">
+        {% if info.profile_image %}
       <img
-        class="img-thumbnail"
+        id="profile-pic"
+        class="rounded-circle p-1"
         src="{{ info.profile_image.url }}"
         alt="{{ info.username }}"
-        style="width: 150px; max-height: 200px"
+        style="width: 250px; height: 250px;"
       />
       {% else %}
       <img
@@ -31,28 +26,79 @@
         style="width: 150px; max-height: 200px"
       />
       {% endif %}
-    </div>
+      </div>
+      <div class="col-8">
+        <div class="row">
+        {% if request.user.id == info.id %}
+        <div class="d-flex justify-content-end">
+          <p class="mx-auto"><a href="/{{info.username}}/edit/" role="button" class="btn btn-primary btn-sm mr-1">Edit Profile</a></p>
+          <p class="mx-auto"><button type="button" class="btn btn-primary btn-sm ml-1">Delete Profile</button></p>
+        </div>
+        {% endif %}
+      </div>
+      <div class="row">
+        <div class="d-flex justify-content-start">
+        <p class="h1">{{ info.username }}</p>
+        <p class="h1 ml-5 "><button type="button" class="btn btn-primary mx-auto btn-lg ">Follow</button></p>
+        </div>
+      </div>
+  
   </br>
-  <div>
-    <i>InstaCar member since: {{ info.joined_date }}</i>
-    <p>My website: {{info.website}}</p>
-    <p>About me: {{info.bio}}</p>
-    <h1>My Uploads</h1>
-    {% if my_uploads %}
+  <div class="row">
+    <div class="d-flex justify-content-end">
+    {% if count < 2%}
+    <p class="h4 mr-5">{{count}} Post</p>
+    {% else %}
+    <p class="h4 mr-5">{{count}} Posts</p>
+    {% endif %}
+    {% if count < 2%}
+    <p class="h4 ml-5 mr-5">0 Following</p>
+    {% else %}
+    <p class="h4 ml-5 mr-5">0 Following</p>
+    {% endif %}
+    {% if count < 2%}
+    <p class="h4 ml-5 mr-5">0 Followers</p>
+    {% else %}
+    <p class="h4 ml-5 mr-5">0 Followers</p>
+    {% endif %}
+    </div>  
+  </div>
+  <div class="row">
+    <p class="h3">About {{info.username}}</p>
+  </div>
+  <div class="row">
+    <p class="h5 ml-2">{{info.bio}}</p>
+  </div>
+  <div class="row">
+    <p class="h5 ml-4 mr-5"><a href={{info.website}}>{{info.website}}</a></p>
+    <p class="h6 ml-5">InstaCar member since: {{ info.joined_date }}</p>
+  </div>
+  </div>
+  
+</div>
+</br>
+</div>
+</br>
+
+<div class="d-flex justify-content-start flex-wrap white">
+  {% if my_uploads %}
     {% for uploads in my_uploads %}
-    <a href="/post/{{uploads.id}}/">
+    <a
+    href="/post/{{uploads.id}}/">
     <img
-    class="img-thumbnail"
+    class="img-thumbnail m-auto"
     src="{{ uploads.car_image.url }}"
     alt="morty"
-    style="width: 50px; max-height: 80px"
+    style="width: 277px; height: 277px"
     />
   </a>
-    {% endfor %}
-    {% else %}
-    <h1>You have not uploaded and cars yet</h1>
-    {% endif %}
-    {% endif %}
+  {% endfor %}
+  {% include "photo-modal.html" %}
+  {% else %}
+  <h1>You have not uploaded and cars yet</h1>
+  {% endif %}
 </div>
-  </div>
+
+  {% endif %}
+
 {% endblock %}

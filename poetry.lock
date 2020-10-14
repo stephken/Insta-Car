@@ -28,6 +28,17 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 category = "main"
+description = "A Django plugin for creating AJAX driven forms in Bootstrap modal."
+name = "django-bootstrap-modal-forms"
+optional = false
+python-versions = "*"
+version = "2.0.0"
+
+[package.dependencies]
+Django = ">=1.8"
+
+[[package]]
+category = "main"
 description = "Deletes old files."
 name = "django-cleanup"
 optional = false
@@ -70,7 +81,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "0.3.1"
 
 [metadata]
-content-hash = "8db0441b76388e98b5368f67a61e0e1015361092fa06592ca63e573344fbd765"
+content-hash = "8a132d508c361e450fe28346138192cca058d7ab9babed3338fa47ff9dd757d5"
 lock-version = "1.0"
 python-versions = "^3.8"
 
@@ -82,6 +93,9 @@ asgiref = [
 django = [
     {file = "Django-3.1.2-py3-none-any.whl", hash = "sha256:c93c28ccf1d094cbd00d860e83128a39e45d2c571d3b54361713aaaf9a94cac4"},
     {file = "Django-3.1.2.tar.gz", hash = "sha256:a2127ad0150ec6966655bedf15dbbff9697cc86d61653db2da1afa506c0b04cc"},
+]
+django-bootstrap-modal-forms = [
+    {file = "django-bootstrap-modal-forms-2.0.0.tar.gz", hash = "sha256:0d64e545fc2dd1f9e2550c89074789ce6a8197675596cb295c2574ae0b9ed078"},
 ]
 django-cleanup = [
     {file = "django-cleanup-5.1.0.tar.gz", hash = "sha256:8976aec12a22913afb3d1fcb541b1aedde2f5ec243e4260c5ff78bb6aa75a089"},
