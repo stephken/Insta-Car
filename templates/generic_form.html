@@ -8,11 +8,14 @@
   <div class="d-flex justify-content-start flex-wrap white">
     <div class="mx-auto shadow-lg p-3 mb-5 bg-white rounded mt-5">
     <form action="" enctype="multipart/form-data" method="post" class="mx-auto">
-      {% csrf_token %} {{ form.as_p }}
+      {% csrf_token %} 
+
+      {{ form.as_p }}
       <input type="submit" value="Submit!" />
     </form>
   </div>
   </div>
+
 </div>
 {% endblock %}
 

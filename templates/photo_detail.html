@@ -57,6 +57,9 @@
 </br>
 </div>
 <div class="comments mx-auto border-bottom border-left border-right">
+  <div class="border-bottom caption"> 
+    <p class="p-4"><span class="bold">{{ info.username }} </span><span class="cap-text">{{car.caption}}</span></p>
+  </div>
   {% for comment in comment_list %}
   <div class="border-bottom"> 
     <div>{{ comment.created_on }}</div>

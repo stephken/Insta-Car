@@ -63,3 +63,16 @@
 .pic_detail_wrapper {
   margin-left: -140px;
 }
+
+.caption {
+  min-height: 100px;
+}
+
+.bold {
+  font-size: large;
+  font-weight: bold;
+}
+
+.cap-text {
+  font-size: medium;
+}
