@@ -1,3 +1,4 @@
+from django.utils.crypto import get_random_string
 from pathlib import Path
 import os
 import sys
@@ -22,7 +23,6 @@ def find_or_create_secret_key():
         from secret_key import SECRET_KEY
         return SECRET_KEY
     else:
-        from django.utils.crypto import get_random_string
         chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&amp;*(-_=+)'
         new_key = get_random_string(50, chars)
         with open(SECRET_KEY_FILEPATH, 'w') as f:
