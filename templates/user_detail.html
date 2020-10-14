@@ -44,6 +44,7 @@
       </div>
   
   </br>
+      
   <div class="row">
     <div class="d-flex justify-content-end">
     {% if count < 2%}
@@ -95,10 +96,9 @@
   {% endfor %}
   {% include "photo-modal.html" %}
   {% else %}
-  <h1>You have not uploaded and cars yet</h1>
+  <h1>You have not uploaded any cars yet</h1>
   {% endif %}
 </div>
-
   {% endif %}
 
 {% endblock %}

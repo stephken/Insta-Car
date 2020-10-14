@@ -22,9 +22,9 @@ urlpatterns = [
     path('comment/<int:pk>/delete', del_comment, name='del_comment'),
     path('comment/<int:pk>/edit', edit_comment, name='del_comment'),
     path('admin/', admin.site.urls),
-    path('<str:username>/', profile_view, name='profile'),
     path('<str:username>/edit/', profile_edit_view, name='profile_edit'),
     path('<str:username>/delete/', del_user, name='delete'),
+    path('<str:username>/', profile_view, name='profile'),
 
 ]
 if settings.DEBUG:
