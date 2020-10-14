@@ -16,8 +16,10 @@ def profile_view(request, username):
     user = InstaUser.objects.get(username=username)
     profile_info = InstaUser.objects.filter(username=user).first()
     users_uploads = FavoriteCar.objects.filter(poster=user.id).all()
+    count = FavoriteCar.objects.filter(poster=user.id).count
     context_dict['info'] = profile_info
     context_dict['my_uploads'] = users_uploads
+    context_dict['count'] = count
     return render(request, "user_detail.html", context_dict)
 
 def profile_edit_view(request, username):

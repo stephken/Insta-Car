@@ -38,8 +38,10 @@ def comment_form_view(request, post_id):
 
 def photo_detail(request, post_id):
     car = get_object_or_404(FavoriteCar, id=post_id)
+    poster_id = car.poster.id
+    profile_info = InstaUser.objects.filter(id=poster_id).first()
     comment_list = Comment.objects.filter(post=car).order_by('-created_on')
-    return render(request, 'photo_detail.html', {'car': car, "comment_list": comment_list})
+    return render(request, 'photo_detail.html', {'car': car, "comment_list": comment_list, "info":profile_info})
 
 def up_vote(request, post_id):
     vote = FavoriteCar.objects.get(id=post_id)

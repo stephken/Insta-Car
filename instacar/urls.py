@@ -20,7 +20,7 @@ urlpatterns = [
     path('post/<int:post_id>/edit/', post_edit_view, name='post_edit'),
     path('post/<int:post_id>/delete/', del_post, name='del_post'),
     path('comment/<int:pk>/delete', del_comment, name='del_comment'),
-    path('comment/<int:pk>/edit', edit_comment, name='edit_comment'),
+    path('comment/<int:pk>/edit', edit_comment, name='del_comment'),
     path('admin/', admin.site.urls),
     path('<str:username>/edit/', profile_edit_view, name='profile_edit'),
     path('<str:username>/delete/', del_user, name='delete'),
