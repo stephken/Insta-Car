@@ -8,14 +8,24 @@
     <div class="width_row mx-auto border-top border-left border-right">
     <div class="row row-cols-2 m-1">
       <div class="col-2">
-        <img
+        {% if info.profile_image %}
+        <a href="/{{info.username}}"><img
         id="profile-pic"
         class="rounded-circle p-1"
         src="{{ info.profile_image.url }}"
         alt="{{ info.username }}"
         style="width: 65px; height: 65px;"
-        />
+        /></a>
+        {% else %}
+        <img
+        class="img-thumbnail"
+        src="/static/images/fillerphoto.png"
+        alt="{{ info.username }}"
+        style="width: 65px; max-height: 65px"
+      />
+      {% endif %}
       </div>
+      
       <div class="col-8">
         <div class="row">
           <div class="mt-n1"><h4>{{info.username}}</h4></div>
