@@ -1,19 +1,21 @@
-{% extends "base.html" %} {% block content %} 
+{% extends "base.html" %}
+{% block nav %} 
+{% include 'navbar.html' %} 
+{% endblock %}
+{% block content %} 
 
-</br>
-<div id="postform">
-{% if request.user.is_authenticated != True %}
-<h1>Welcome to InstaCar!</h1>
-</br>
-<h3>Please sign in</h3>
-</br>
-{% endif %}
+<div class="container">
+  <div class="d-flex justify-content-start flex-wrap white">
+    <div class="mx-auto shadow-lg p-3 mb-5 bg-white rounded mt-5">
+    <form action="" enctype="multipart/form-data" method="post" class="mx-auto">
+      {% csrf_token %} 
 
-<div>
-  <form action="" enctype="multipart/form-data" method="post">
-    {% csrf_token %} {{ form.as_p }}
-    <input type="submit" value="Submit!" />
-  </form>
-</div>
+      {{ form.as_p }}
+      <input type="submit" value="Submit!" />
+    </form>
+  </div>
+  </div>
+
 </div>
 {% endblock %}
+

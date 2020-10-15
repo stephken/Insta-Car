@@ -8,7 +8,7 @@ def signup_view(request):
         form = SignUpForm(request.POST,request.FILES)
         if form.is_valid():
             data = form.cleaned_data
-            new_user = InstaUser.objects.create_user(username=data.get("username"), password=data.get("password"), bio=data.get("bio"), profile_image=data.get("profile_image"))
+            new_user = InstaUser.objects.create_user(username=data.get("username"), password=data.get("password"), bio=data.get("bio"), website=data.get("website"), profile_image=data.get("profile_image"))
             login(request, new_user)
             return HttpResponseRedirect(reverse("homepage"))  
     form = SignUpForm()

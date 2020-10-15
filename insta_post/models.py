@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import date
+from insta_user.models import InstaUser
 
 
 class FavoriteCar(models.Model):
@@ -12,6 +13,18 @@ class FavoriteCar(models.Model):
     down_votes = models.IntegerField(default=0)
     total_votes = models.IntegerField(default=0)
     car_image = models.ImageField(upload_to='images/', null=True, blank=True)
+    poster = models.ForeignKey(
+        InstaUser, on_delete=models.CASCADE, related_name="poster")
+    caption = models.CharField(max_length=280, null=True, blank=True)
 
     def __str__(self):
-        return self.make, self.model, self.year, self.color, self.time_posted
+        return "InstaCar Post #: " + str(self.id) + " -- " + self.year + " " + self.make + " " +  self.model
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(
+        FavoriteCar, on_delete=models.CASCADE, related_name='comments')
+    commenter = models.ForeignKey(
+        InstaUser, on_delete=models.CASCADE, related_name="commenter")
+    content = models.CharField(max_length=280)
+    created_on = models.DateTimeField(auto_now_add=True)
