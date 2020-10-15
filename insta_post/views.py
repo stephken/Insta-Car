@@ -1,8 +1,8 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse, get_object_or_404, redirect
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponse
 from insta_user.models import InstaUser
 from insta_post.models import FavoriteCar, Comment
-from insta_post.forms import PostForm, CommentForm, EditPostForm, EditCommentForm
+from insta_post.forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -11,10 +11,11 @@ def index(request):
     cars = FavoriteCar.objects.all()
     return render(request, "index.html", {"cars": cars})
 
-
 def post_form_view(request):
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
+        if 'car_image' not in request.FILES:
+            return HttpResponse("Please select a photo")
         print(request.FILES['car_image'])
         FavoriteCar.objects.create(
             poster=request.user, 
@@ -23,7 +24,7 @@ def post_form_view(request):
             year=request.POST['year'], 
             color=request.POST['color'], 
             caption=request.POST['caption'], 
-            car_image=request.FILES['car_image'])
+            car_image=request.FILES['car_image'])  
         return HttpResponseRedirect(reverse("homepage"))
     form = PostForm()
     return render(request, "yearmakemodel.html", {"form": form})
@@ -36,8 +37,8 @@ def post_edit_view(request, post_id):
             post.make = request.POST['make']
             post.model = request.POST['model']
             post.year = request.POST['year']
-            post.color = request.POST['color']
             post.caption = request.POST['caption']
+            post.color = request.POST['color']
             if 'car_image' in request.FILES:
                 post.car_image = request.FILES['car_image']
             post.save()
@@ -45,8 +46,9 @@ def post_edit_view(request, post_id):
         else:
             form = PostForm(instance=post)
         return render(request, "yearmakemodel.html", {'form': form})
-    else:
+    else: 
         return HttpResponseForbidden("You do not have permission to edit this post")
+    
 
 def comment_form_view(request, post_id):
     post = get_object_or_404(FavoriteCar, id=post_id)
@@ -108,14 +110,14 @@ def edit_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk) 
     if request.user.id == comment.commenter.id:
         if request.method == "POST":
-            form = EditCommentForm(request.POST, instance=comment)
+            form = CommentForm(request.POST, instance=comment)
             if form.is_valid():
                 data = form.cleaned_data
                 comment.content = data.get('content')
                 comment.save()
                 return redirect('post', comment.post.id)
         else:
-            form = EditCommentForm(instance=comment)
+            form = CommentForm(instance=comment)
         return render(request, 'generic_form.html', {'form': form})
     else: 
         return HttpResponseForbidden("You do not have permission to edit this comment")
