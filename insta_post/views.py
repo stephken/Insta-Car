@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse, get_object_or_404, redirect
+from django.http import HttpResponseForbidden
 from insta_user.models import InstaUser
 from insta_post.models import FavoriteCar, Comment
 from insta_post.forms import PostForm, CommentForm, EditPostForm, EditCommentForm
@@ -84,29 +85,58 @@ def down_vote(request, post_id):
 
 def del_post(request, post_id):
     post = FavoriteCar.objects.get(id=post_id)
-    post.delete()
-    return redirect('profile', request.user.username)
+    if request.user.id == post.poster.id:
+        post.delete()
+        return redirect('profile', request.user.username)
+    else: 
+        return HttpResponseForbidden("You do not have permission to delete this post")
 
 
 def del_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
-    comment.delete()
-    # return redirect('post_detail', pk=comment.post.pk)
-    return redirect('post', comment.post.id)
+    if request.user.id == comment.commenter.id:
+        comment.delete()
+        return redirect('post', comment.post.id)
+    else: 
+        return HttpResponseForbidden("You do not have permission to delete this comment")
 
 
 def edit_comment(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
-    if request.method == "POST":
-        form = EditCommentForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            comment.content = data.get('content')
-            comment.save()
-    # return redirect('post_detail', pk=comment.post.pk)
-            # return redirect('post', comment.post.id)
-            return redirect('post', comment.post.id)
-    form = EditCommentForm()
-    return render(request, 'generic_form.html', {'form': form})
+    comment = get_object_or_404(Comment, pk=pk) 
+    if request.user.id == comment.commenter.id:
+        if request.method == "POST":
+            form = EditCommentForm(request.POST, instance=comment)
+            if form.is_valid():
+                data = form.cleaned_data
+                comment.content = data.get('content')
+                comment.save()
+                return redirect('post', comment.post.id)
+        else:
+            form = EditCommentForm(instance=comment)
+        return render(request, 'generic_form.html', {'form': form})
+    else: 
+        return HttpResponseForbidden("You do not have permission to edit this comment")
+    
 
-
+def post_edit_view(request, post_id):
+    post = FavoriteCar.objects.get(id=post_id)
+    if post.poster == request.user:
+        if request.method == "POST":
+            form = EditPostForm(request.POST, instance=post)
+            if form.is_valid():
+                data = form.cleaned_data
+                post.make = data.get('make')
+                post.model = data.get('model')
+                post.year = data.get('year')
+                post.caption = data.get('caption')
+                post.color = data.get('color')
+                if 'car_image' in request.FILES:
+                    post.car_image = request.FILES['car_image']
+                post.save()
+                return redirect('post', post_id)
+        else:
+            form = EditPostForm(instance=post)
+        return render(request, 'generic_form.html', {'form': form})
+    else: 
+        return HttpResponseForbidden("You do not have permission to edit this post")
+    
