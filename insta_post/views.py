@@ -8,16 +8,17 @@ from django.contrib import messages
 from django.views.generic import TemplateView
 
 class IndexView(TemplateView):
+  
     def get(self,request):
         cars = FavoriteCar.objects.all()
         return render(request, "index.html", {"cars": cars})
+      
 
 def post_form_view(request):
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
         if 'car_image' not in request.FILES:
             return HttpResponse("Please select a photo")
-        print(request.FILES['car_image'])
         FavoriteCar.objects.create(
             poster=request.user, 
             make=request.POST['make'], 
@@ -43,6 +44,7 @@ def post_edit_view(request, post_id):
             if 'car_image' in request.FILES:
                 post.car_image = request.FILES['car_image']
             post.save()
+            form = PostForm()
             return redirect('post', post_id)
         else:
             form = PostForm(instance=post)
@@ -99,8 +101,8 @@ def del_post(request, post_id):
 
 
 def del_comment(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
-    if request.user.id == comment.commenter.id:
+    comment = Comment.objects.filter(pk=pk).first()
+    if request.user.id == comment.commenter.id or request.user.id == comment.post.poster.id:
         comment.delete()
         return redirect('post', comment.post.id)
     else: 
@@ -122,5 +124,4 @@ def edit_comment(request, pk):
         return render(request, 'generic_form.html', {'form': form})
     else: 
         return HttpResponseForbidden("You do not have permission to edit this comment")
-    
-    
+        
