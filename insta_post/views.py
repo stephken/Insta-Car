@@ -31,7 +31,7 @@ def post_form_view(request):
 def post_edit_view(request, post_id):
     post = FavoriteCar.objects.get(id=post_id)
     if request.method == "POST":
-        form = EditPostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         post.make = request.POST['make']
         post.model = request.POST['model']
         post.year = request.POST['year']
@@ -42,7 +42,7 @@ def post_edit_view(request, post_id):
         post.save()
         return HttpResponseRedirect(reverse('homepage'))
 
-    form = EditPostForm()
+    form = PostForm()
     return render(request, "yearmakemodel.html", {'form': form})
 
 def comment_form_view(request, post_id):
@@ -117,26 +117,4 @@ def edit_comment(request, pk):
     else: 
         return HttpResponseForbidden("You do not have permission to edit this comment")
     
-
-def post_edit_view(request, post_id):
-    post = FavoriteCar.objects.get(id=post_id)
-    if post.poster == request.user:
-        if request.method == "POST":
-            form = EditPostForm(request.POST, instance=post)
-            if form.is_valid():
-                data = form.cleaned_data
-                post.make = data.get('make')
-                post.model = data.get('model')
-                post.year = data.get('year')
-                post.caption = data.get('caption')
-                post.color = data.get('color')
-                if 'car_image' in request.FILES:
-                    post.car_image = request.FILES['car_image']
-                post.save()
-                return redirect('post', post_id)
-        else:
-            form = EditPostForm(instance=post)
-        return render(request, 'generic_form.html', {'form': form})
-    else: 
-        return HttpResponseForbidden("You do not have permission to edit this post")
     
