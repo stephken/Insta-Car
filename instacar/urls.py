@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from authentication.views import signup_view, logout_view, LoginView
 from insta_user.views import index, profile_view, profile_edit_view, del_user
-from insta_post.views import index, post_form_view, comment_form_view, photo_detail, up_vote, down_vote, del_post, post_edit_view, del_comment, edit_comment, FollowView, UnfollowView
+from insta_post.views import IndexView, post_form_view, comment_form_view, photo_detail, up_vote, down_vote, del_post, post_edit_view, del_comment, edit_comment, FollowView, UnfollowView
 
 
 urlpatterns = [
