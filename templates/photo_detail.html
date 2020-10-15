@@ -74,8 +74,10 @@
     <div>{{ comment.created_on }}</div>
     <strong>{{ comment.commenter }}</strong>
     <p>{{ comment.content|linebreaks }}</p>
-    {% if request.user.id == car.poster.id or request.user.id == comment.commenter.id%}
+    {% if request.user.id == car.poster.id or request.user.id == comment.commenter.id %}
     <a href='/comment/{{comment.id}}/delete'>Delete Comment</a>
+    {% endif %}
+    {% if request.user.id == comment.commenter.id %}
     <a href='/comment/{{comment.id}}/edit'>Edit Comment</a>
     {% endif %}
   </div>

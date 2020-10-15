@@ -100,8 +100,8 @@ def del_post(request, post_id):
 
 
 def del_comment(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
-    if request.user.id == comment.commenter.id:
+    comment = Comment.objects.filter(pk=pk).first()
+    if request.user.id == comment.commenter.id or request.user.id == comment.post.poster.id:
         comment.delete()
         return redirect('post', comment.post.id)
     else: 
@@ -123,5 +123,4 @@ def edit_comment(request, pk):
         return render(request, 'generic_form.html', {'form': form})
     else: 
         return HttpResponseForbidden("You do not have permission to edit this comment")
-    
-    
+        

@@ -14,7 +14,9 @@
           {% else %}
           <h2>Log-In</h2>
           {% endif %}
+          <p>{{ error_messages }}</p>
         </div>
+        
     <form action="" enctype="multipart/form-data" method="post" class="mx-auto">
       {% csrf_token %} 
 
