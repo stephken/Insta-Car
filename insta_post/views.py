@@ -3,7 +3,7 @@ from insta_post.models import FavoriteCar
 
 
 
-
+##test
 
 def up_vote(request, post_id):
     vote = FavoriteCar.objects.get(id=post_id)
