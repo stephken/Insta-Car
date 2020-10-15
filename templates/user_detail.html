@@ -39,7 +39,7 @@
       <div class="row">
         <div class="d-flex justify-content-start">
         <p class="h1">{{ info.username }}</p>
-        <p class="h1 ml-5 "><button type="button" class="btn btn-primary mx-auto btn-lg ">Follow</button></p>
+        <p class="h1 ml-5 "><a href="/following/{{info.id}}/" type="button" class="btn btn-primary mx-auto btn-lg ">Follow</a></p>
         </div>
       </div>
   
@@ -53,9 +53,9 @@
     <p class="h4 mr-5">{{count}} Posts</p>
     {% endif %}
     {% if count < 2%}
-    <p class="h4 ml-5 mr-5">0 Following</p>
+    <p class="h4 ml-5 mr-5">{{ info.following.all.count }} Following</p>
     {% else %}
-    <p class="h4 ml-5 mr-5">0 Following</p>
+    <p class="h4 ml-5 mr-5">{{ info.following.all.count }} Following</p>
     {% endif %}
     {% if count < 2%}
     <p class="h4 ml-5 mr-5">0 Followers</p>

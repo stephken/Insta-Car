@@ -125,3 +125,18 @@ def edit_comment(request, pk):
     else: 
         return HttpResponseForbidden("You do not have permission to edit this comment")
         
+
+class FollowView(TemplateView):
+    def get(self, request, follow_id):
+        signed_in_user = InstaUser.objects.filter(username=request.user.username).first()
+        follow = InstaUser.objects.filter(id=follow_id).first()
+        signed_in_user.following.add(follow)
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+class UnfollowView(TemplateView):
+    def get(self, request, unfollow_id):
+        signed_in_user = request.user
+        unfollow = InstaUser.objects.filter(id=unfollow_id).first()
+        signed_in_user.following.add(unfollow)
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
