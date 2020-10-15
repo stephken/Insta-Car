@@ -2,10 +2,12 @@ from django import forms
 from insta_post.models import FavoriteCar, Comment
 
 class PostForm(forms.ModelForm):
-
+    year= forms.ChoiceField(label='year', widget=forms.Select(attrs={"name": "car-years", "id": "car-years"}))
+    make= forms.CharField(label='make', widget=forms.Select(attrs={"name": "car-makes", "id": "car-makes"}))
+    model= forms.ChoiceField(label='model', widget=forms.Select(attrs={"name": "car-models", "id": "car-models"}))
     class Meta:
         model = FavoriteCar
-        fields = ["make", "model", "year", "color", "caption", "car_image"]
+        fields = ["year", "make", "model", "color", "caption", "car_image"]
 
 class CommentForm(forms.ModelForm):
 
@@ -14,15 +16,12 @@ class CommentForm(forms.ModelForm):
         fields = ["content"]
 
 class EditPostForm(forms.ModelForm):
-    make = forms.CharField(max_length=80, required=False)
-    model = forms.CharField(max_length=80, required=False)
-    year = forms.CharField(max_length=4, required=False)
-    color = forms.CharField(max_length=30, required=False)
-    caption = forms.CharField(max_length=280, required=False)
-
+    year= forms.ChoiceField(label='year', widget=forms.Select(attrs={"name": "car-years", "id": "car-years"}))
+    make= forms.CharField(label='make', widget=forms.Select(attrs={"name": "car-makes", "id": "car-makes"}))
+    model= forms.ChoiceField(label='model', widget=forms.Select(attrs={"name": "car-models", "id": "car-models"}))
     class Meta:
         model = FavoriteCar
-        fields = ('make', 'model', 'year', 'color', 'caption', 'car_image')
+        fields = ["year", "make", "model", "color", "caption", "car_image"]
 
 class EditCommentForm(forms.ModelForm):
 
