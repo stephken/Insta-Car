@@ -7,15 +7,30 @@
 <div class="container">
   <div class="d-flex justify-content-start flex-wrap white">
     <div class="mx-auto shadow-lg p-3 mb-5 bg-white rounded mt-5">
+      <div class="text-center mb-4">
+        <div class="console logo-font">
+          {% if request.get_full_path == '/signup/' %}
+          <h2>Sign Up</h2>
+          {% else %}
+          <h2>Log-In</h2>
+          {% endif %}
+        </div>
     <form action="" enctype="multipart/form-data" method="post" class="mx-auto">
       {% csrf_token %} 
 
-      {{ form.as_p }}
-      <input type="submit" value="Submit!" />
-    </form>
-  </div>
-  </div>
+      {% for field in form.visible_fields %}
+<div class="form-group">
+  <label for="{{ field.id_for_label}}">{{ field.label }}</label>
+  <input type="{{field.field.widget.input_type}}" name="{{field.name}}" class="form-control" id="{{ field.id_for_label}}" placeholder="{{ field.label }}">
+</div>
+{% endfor %}
 
+      <input type="submit" value="Submit!" />
+    </div>
+    </form>
+    <a href="/signup/">Dont have an account? Click here to create an account</a>
+  </div>
+  </div>
 </div>
 {% endblock %}
 

@@ -76,3 +76,7 @@
 .cap-text {
   font-size: medium;
 }
+
+.console {
+  min-height: 75px;
+}
