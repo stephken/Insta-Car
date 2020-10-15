@@ -16,7 +16,6 @@ def post_form_view(request):
         form = PostForm(request.POST, request.FILES)
         if 'car_image' not in request.FILES:
             return HttpResponse("Please select a photo")
-        print(request.FILES['car_image'])
         FavoriteCar.objects.create(
             poster=request.user, 
             make=request.POST['make'], 
@@ -42,6 +41,7 @@ def post_edit_view(request, post_id):
             if 'car_image' in request.FILES:
                 post.car_image = request.FILES['car_image']
             post.save()
+            form = PostForm()
             return redirect('post', post_id)
         else:
             form = PostForm(instance=post)
