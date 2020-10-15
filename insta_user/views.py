@@ -13,14 +13,15 @@ def index(request):
 
 def profile_view(request, username):
     context_dict = {}
-    user = InstaUser.objects.get(username=username)
-    profile_info = InstaUser.objects.filter(username=user).first()
-    users_uploads = FavoriteCar.objects.filter(poster=user.id).all()
-    count = FavoriteCar.objects.filter(poster=user.id).count
+    users_info = InstaUser.objects.filter(username=username).first()
+    profile_info = InstaUser.objects.filter(username=users_info).first()
+    users_uploads = FavoriteCar.objects.filter(poster=users_info).all()
+    count = FavoriteCar.objects.filter(poster=users_info).count
     context_dict['info'] = profile_info
     context_dict['my_uploads'] = users_uploads
     context_dict['count'] = count
     return render(request, "user_detail.html", context_dict)
+
 
 def profile_edit_view(request, username):
     edit = get_object_or_404(InstaUser, username=username)

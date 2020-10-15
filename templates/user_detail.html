@@ -84,6 +84,7 @@
 <div class="d-flex justify-content-start flex-wrap white">
   {% if my_uploads %}
     {% for uploads in my_uploads %}
+    {% if uploads.car_image %}
     <a
     href="/post/{{uploads.id}}/">
     <img
@@ -93,6 +94,16 @@
     style="width: 277px; height: 277px"
     />
   </a>
+  {% else %}
+  <a
+    href="/post/{{uploads.id}}/">
+  <img
+    class="img-thumbnail"
+    src="/static/images/fillerphoto.png"
+    alt="{{ uploads.model }}"
+    style="width: 277px; max-height: 277px"
+  /></a>
+  {% endif %}
   {% endfor %}
   {% include "photo-modal.html" %}
   {% else %}
