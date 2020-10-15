@@ -5,13 +5,14 @@ from insta_post.models import FavoriteCar, Comment
 from insta_post.forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.views.generic import TemplateView
 
-
-@login_required(login_url='/login/')
-def index(request):
-    cars = FavoriteCar.objects.all()
-    return render(request, "index.html", {"cars": cars})
+class IndexView(TemplateView):
+  
+    def get(self,request):
+        cars = FavoriteCar.objects.all()
+        return render(request, "index.html", {"cars": cars})
+      
 
 def post_form_view(request):
     if request.method == "POST":
