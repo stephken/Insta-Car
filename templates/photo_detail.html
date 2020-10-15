@@ -1,49 +1,88 @@
-{% extends "base.html" %} {% block content %}
-<div>
-  <nav>
-    <a href="/">Home</a>
-  </nav>
+{% extends "base.html" %}
+{% block nav %} 
+{% include 'navbar.html' %}
+{% endblock %}
+{% block content %} 
+<div class="d-flex justify-content-center">
+  <div class="pic_detail_containter">
+    <div class="width_row mx-auto border-top border-left border-right">
+    <div class="row row-cols-2 m-1">
+      <div class="col-2">
+        {% if info.profile_image %}
+        <a href="/{{info.username}}"><img
+        id="profile-pic"
+        class="rounded-circle p-1"
+        src="{{ info.profile_image.url }}"
+        alt="{{ info.username }}"
+        style="width: 65px; height: 65px;"
+        /></a>
+        {% else %}
+        <img
+        class="img-thumbnail"
+        src="/static/images/fillerphoto.png"
+        alt="{{ info.username }}"
+        style="width: 65px; max-height: 65px"
+      />
+      {% endif %}
+      </div>
+      
+      <div class="col-8">
+        <div class="row">
+          <div class="mt-n1"><h4>{{info.username}}</h4></div>
+        </div>
+        <div class="row">
+          <div class="mt-n3"><h4>{{car.year}} {{car.make}} {{car.model}}</h4></div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="row">
+    {% if car.car_image %}
+    <img
+      class="img-fluid mx-auto d-block"
+      src="{{ car.car_image.url }}"
+      alt="{{ car.model }}"
+      style="width: 600px; height: 600px"
+    />
+    {% else %}
+    <img
+      class="img-thumbnail"
+      src="/static/images/fillerphoto.png"
+      alt="{{ car.model }}"
+      style="width: 300px; max-height: 600px"
+    />
+    {% endif %}
+    </div>
+  </div>
 </div>
-
-<div>
-  {% if car.car_image %}
-  <img
-    class="img-thumbnail"
-    src="{{ car.car_image.url }}"
-    alt="{{ car.model }}"
-    style="width: 300px; max-height: 600px"
-  />
-  {% else %}
-  <img
-    class="img-thumbnail"
-    src="/static/images/fillerphoto.png"
-    alt="{{ car.model }}"
-    style="width: 300px; max-height: 600px"
-  />
-  {% endif %}
-
-  <p>Posted by: {{car.poster}}</p>
-  <p>At: {{ car.time_posted}}</p>
-  <p>Make: {{car.make}}</p>
-  <p>Model: {{car.model}}</p>
-  <p>Color: {{car.color}}</p>
-  <p>Year: {{car.year}}</p>
-  <p>Thumb's up: {{ car.total_votes}}</p>
-  <button><a href="/upvote/{{ car.id }}/">Thumb's up</a></button>
-  <button>
-    <a href="/downvote/{{ car.id }}/">Thumb's down</a>
-  </button>
-  <button><a href="newcomment/">Add a comment</a></button>
-</div>
-<div>
+<div class="width_row mx-auto border-bottom border-left border-right">
+  <span class="detail_icons ml-3 m-2"><a href="newcomment/"><i class="far fa-comment-dots"></i></a></span>
+  <span class="detail_icons m-2"><a href="/upvote/{{ car.id }}/"><i class="far fa-heart"></i></a></span>
+</br>
+  <span class="h4 ml-3 pb-2" >Liked  {{ car.total_votes}} times</span>
+  <span class="perms">{% if request.user.id == car.poster.id %}
+    <a href="/post/{{car.id}}/edit/" style="color: black">Edit Post | </a>
+    <a href="/post/{{car.id}}/delete/" style="color: black">Delete post</a>
+    {% endif %}</span>
+</br>
+<div class="comments mx-auto border-bottom border-left border-right">
+  <div class="border-bottom caption"> 
+    <p class="p-4"><span class="bold">{{ info.username }} </span><span class="cap-text">{{car.caption}}</span></p>
+  </div>
   {% for comment in comment_list %}
-  <div>
+  <div class="border-bottom"> 
     <div>{{ comment.created_on }}</div>
     <strong>{{ comment.commenter }}</strong>
     <p>{{ comment.content|linebreaks }}</p>
+    {% if request.user.id == car.poster.id or request.user.id == comment.commenter.id%}
+    <a href='/comment/{{comment.id}}/delete'>Delete Comment</a>
+    <a href='/comment/{{comment.id}}/edit'>Edit Comment</a>
+    {% endif %}
   </div>
   {% empty %}
   <p>No comments here yet :(</p>
   {% endfor %}
 </div>
+</div>
+
 {% endblock %}

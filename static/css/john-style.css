@@ -1,0 +1,78 @@
+.logo-font {
+  font-family: "Lobster Two", cursive;
+  font-size: 2em;
+  color: black;
+}
+
+.logo-margin {
+    margin-right: 10em;
+}
+
+#nav-bar-btn {
+  color: white;
+  background-color: #3f729b;
+}
+.nav-color {
+    background-color: rgb(211,211,211);
+
+}
+#profiletop {
+  height: 400px;
+}
+.thick {
+  border: 5px solid #337AB7;
+  padding: 15px;
+}
+.prof {
+
+        vertical-align: middle;
+        text-align: center;
+}
+
+#frame {
+  vertical-align: middle;
+  text-align: center;
+  display: table-cell;
+}
+
+.pic_detail_containter {
+    width: 720px;
+}
+
+.width_row{
+    width: 600px;
+    height: 75px;
+}
+
+.detail_icons {
+    font-size: 2.5em;
+}
+
+.comments {
+ width: 600px;
+}
+
+.perms { 
+    margin-left: 22em;
+}
+
+.white {
+    background-color: white
+}
+
+.pic_detail_wrapper {
+  margin-left: -140px;
+}
+
+.caption {
+  min-height: 100px;
+}
+
+.bold {
+  font-size: large;
+  font-weight: bold;
+}
+
+.cap-text {
+  font-size: medium;
+}
