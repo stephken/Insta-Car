@@ -34,11 +34,11 @@ def profile_edit_view(request, username):
                 return redirect('profile', username)
         else:
             form = EditProfileForm(instance=edit)
-        return render(request, 'generic_form.html', {'form': form})
+        return render(request, 'profile_form.html', {'form': form})
     else: return HttpResponseForbidden("You do not have permission to edit this post")
                 
     form = EditProfileForm()
-    return render(request, 'generic_form.html', {'form': form} )
+    return render(request, 'profile_form.html', {'form': form} )
 
 def del_user(request, username):    
     u = InstaUser.objects.get(username=username)
