@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block nav %} {% include 'navbar.html' %}
+<br />
+{% endblock %} {% block content %}
+
+<div class="container">
+  <div class="d-flex justify-content-start flex-wrap white">
+    <div class="mx-auto shadow-lg p-3 mb-5 bg-white rounded mt-5">
+      <div class="text-center mb-4">
+        <div class="console logo-font">
+          <h1>Edit profile</h1>
+        </div>
+        <div>
+          <form action="" enctype="multipart/form-data" method="post">
+            {% csrf_token %} {{ form.as_p }}
+            <input type="submit" value="Submit!" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
