@@ -140,3 +140,9 @@ class UnfollowView(TemplateView):
         unfollow = InstaUser.objects.filter(id=unfollow_id).first()
         signed_in_user.following.add(unfollow)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+def handler404(request, exception):
+    return render(request, '404.html', status=404)
+    
+def handler500(request):
+    return render(request, '500.html', status=500)
