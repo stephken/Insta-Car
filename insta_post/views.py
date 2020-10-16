@@ -77,13 +77,11 @@ def photo_detail(request, post_id):
     comment_list = Comment.objects.filter(post=car).order_by('-created_on')
     return render(request, 'photo_detail.html', {'car': car, "comment_list": comment_list, "info": profile_info})
 
-
 def up_vote(request, post_id):
     vote = FavoriteCar.objects.get(id=post_id)
     vote.total_votes += 1
     vote.save()
     return redirect(request.META.get('HTTP_REFERER'))
-
 
 def down_vote(request, post_id):
     vote = FavoriteCar.objects.get(id=post_id)
@@ -91,6 +89,11 @@ def down_vote(request, post_id):
     vote.save()
     return redirect(request.META.get('HTTP_REFERER'))
 
+def comment_likes(request, pk):
+    vote = Comment.objects.get(pk=pk)
+    vote.likes += 1
+    vote.save()
+    return redirect(request.META.get('HTTP_REFERER'))
 
 def del_post(request, post_id):
     post = FavoriteCar.objects.get(id=post_id)
@@ -99,7 +102,6 @@ def del_post(request, post_id):
         return redirect('profile', request.user.username)
     else: 
         return HttpResponseForbidden("You do not have permission to delete this post")
-
 
 def del_comment(request, pk):
     comment = Comment.objects.filter(pk=pk).first()

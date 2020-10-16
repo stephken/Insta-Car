@@ -23,6 +23,7 @@ urlpatterns = [
     path('post/<int:post_id>/delete/', views.del_post, name='del_post'),
     path('comment/<int:pk>/delete/', views.del_comment, name='del_comment'),
     path('comment/<int:pk>/edit/', views.edit_comment, name='del_comment'),
+    path('comment/<int:pk>/like/', views.comment_likes, name='like'),
     path('following/<int:follow_id>/', views.FollowView.as_view()),
     path('unfollowing/<int:unfollow_id>/', views.UnfollowView.as_view()),
     path('500/', TemplateView.as_view(template_name="500.html")),
