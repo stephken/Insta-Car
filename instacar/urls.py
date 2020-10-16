@@ -16,7 +16,7 @@ urlpatterns = [
     path('signup/', signup_view),
     path('newpost/', views.post_form_view),
     path('upvote/<int:post_id>/', views.up_vote),
-    path('downvote/<int:post_id>/', views.down_vote),
+    # path('downvote/<int:post_id>/', views.down_vote),
     path('post/<int:post_id>/', views.photo_detail, name="post"),
     path('post/<int:post_id>/newcomment/', views.comment_form_view),
     path('post/<int:post_id>/edit/', views.post_edit_view, name='post_edit'),

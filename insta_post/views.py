@@ -79,16 +79,16 @@ def photo_detail(request, post_id):
 
 def up_vote(request, post_id):
     vote = FavoriteCar.objects.get(id=post_id)
-    vote.total_votes += 1
+    vote.up_votes += 1
     vote.save()
     return redirect(request.META.get('HTTP_REFERER'))
-
+'''
 def down_vote(request, post_id):
     vote = FavoriteCar.objects.get(id=post_id)
     vote.total_votes -= 1
     vote.save()
     return redirect(request.META.get('HTTP_REFERER'))
-
+'''
 def comment_likes(request, pk):
     vote = Comment.objects.get(pk=pk)
     vote.likes += 1
