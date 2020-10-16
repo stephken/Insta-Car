@@ -62,7 +62,7 @@
   <span class="h4 ml-3 pb-2" >Liked  {{ car.total_votes}} times</span>
   <span class="perms">{% if request.user.id == car.poster.id %}
     <a href="/post/{{car.id}}/edit/" style="color: black">Edit Post | </a>
-    <a href="/post/{{car.id}}/delete/" style="color: black">Delete post</a>
+    <a href="/post/{{car.id}}/delete/" style="color: black" onclick="return confirm('Are you sure you want to delete this post?')">Delete post</a>
     {% endif %}</span>
 </br>
 <div class="comments mx-auto border-bottom border-left border-right">
@@ -75,10 +75,10 @@
     <strong>{{ comment.commenter }}</strong>
     <p>{{ comment.content|linebreaks }}</p>
     {% if request.user.id == car.poster.id or request.user.id == comment.commenter.id %}
-    <a href='/comment/{{comment.id}}/delete'>Delete Comment</a>
+    <a href='/comment/{{comment.id}}/delete/' onclick="return confirm('Are you sure you want to delete this comment?')">Delete Comment</a>
     {% endif %}
     {% if request.user.id == comment.commenter.id %}
-    <a href='/comment/{{comment.id}}/edit'>Edit Comment</a>
+    <a href='/comment/{{comment.id}}/edit/'>Edit Comment</a>
     {% endif %}
   </div>
   {% empty %}
