@@ -26,5 +26,5 @@ class Comment(models.Model):
         FavoriteCar, on_delete=models.CASCADE, related_name='comments')
     commenter = models.ForeignKey(
         InstaUser, on_delete=models.CASCADE, related_name="commenter")
-    content = models.CharField(max_length=280)
+    content = models.CharField(max_length=280, verbose_name="comment")
     created_on = models.DateTimeField(auto_now_add=True)
