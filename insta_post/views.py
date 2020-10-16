@@ -10,6 +10,7 @@ from django.views.generic import TemplateView
 class IndexView(TemplateView):
   
     def get(self,request):
+        # Do not change this objects.all!!!! Rubric item!!!
         cars = FavoriteCar.objects.all()
         return render(request, "index.html", {"cars": cars})
       
@@ -66,7 +67,7 @@ def comment_form_view(request, post_id):
             return redirect('post', post.id)
     else:
         form = CommentForm()
-    return render(request, "generic_form.html", {'form': form})
+    return render(request, "comment_form.html", {'form': form})
 
 
 def photo_detail(request, post_id):
@@ -121,7 +122,7 @@ def edit_comment(request, pk):
                 return redirect('post', comment.post.id)
         else:
             form = CommentForm(instance=comment)
-        return render(request, 'generic_form.html', {'form': form})
+        return render(request, 'comment_form.html', {'form': form})
     else: 
         return HttpResponseForbidden("You do not have permission to edit this comment")
         
