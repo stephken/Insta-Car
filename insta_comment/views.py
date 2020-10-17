@@ -7,7 +7,7 @@ from insta_post.models import FavoriteCar
 from insta_comment.models import Comment
 from insta_post.forms import PostForm
 from insta_comment.forms import CommentForm
-# from insta_comment.helpers import add_one
+from insta_comment.helpers import add_one
 
 
 def comment_form_view(request, post_id):
