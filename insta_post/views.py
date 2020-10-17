@@ -79,19 +79,15 @@ def photo_detail(request, post_id):
 
 def up_vote(request, post_id):
     vote = FavoriteCar.objects.get(id=post_id)
+    # call function here
     vote.up_votes += 1
     vote.save()
     return redirect(request.META.get('HTTP_REFERER'))
-'''
-def down_vote(request, post_id):
-    vote = FavoriteCar.objects.get(id=post_id)
-    vote.total_votes -= 1
-    vote.save()
-    return redirect(request.META.get('HTTP_REFERER'))
-'''
+
 def comment_likes(request, pk):
     vote = Comment.objects.get(pk=pk)
-    vote.likes += 1
+    # call function here
+    vote.up_votes += 1
     vote.save()
     return redirect(request.META.get('HTTP_REFERER'))
 
@@ -141,7 +137,7 @@ class UnfollowView(TemplateView):
     def get(self, request, unfollow_id):
         signed_in_user = request.user
         unfollow = InstaUser.objects.filter(id=unfollow_id).first()
-        signed_in_user.following.add(unfollow)
+        signed_in_user.following.remove(unfollow)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 def handler404(request, exception):

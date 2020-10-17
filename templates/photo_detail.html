@@ -81,7 +81,7 @@
     <a href='/comment/{{comment.id}}/edit/'>Edit Comment</a>
     {% endif %}
     <span class="detail_icons m-2"><a href="/comment/{{ comment.id }}/like/"><i class="far fa-heart" style="font-size:18px"></i></a></span>
-    <span class="h5 ml-3 pb-2" >Liked  {{ comment.likes}} times</span>
+    <span class="h5 ml-3 pb-2" >Liked  {{ comment.up_votes}} times</span>
   </div>
   {% empty %}
   <p>No comments here yet :(</p>
