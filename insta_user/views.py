@@ -17,9 +17,11 @@ def profile_view(request, username):
     profile_info = InstaUser.objects.filter(username=users_info).first()
     users_uploads = FavoriteCar.objects.filter(poster=users_info).all()
     count = FavoriteCar.objects.filter(poster=users_info).count
+    user_following = request.user.following.all()
     context_dict['info'] = profile_info
     context_dict['my_uploads'] = users_uploads
     context_dict['count'] = count
+    context_dict['user_following'] = user_following
     return render(request, "user_detail.html", context_dict)
 
 
@@ -42,9 +44,11 @@ def profile_edit_view(request, username):
 
 def del_user(request, username):    
     u = InstaUser.objects.get(username=username)
-    if u.username == request.user.username:
+    if u.is_staff:
+        return HttpResponseForbidden("Staff profiles cannot be deleted from the browser. See an admin")
+    elif u.username == request.user.username:
         u.delete()
         messages.success(request, "The user is deleted")
-        return render(request, 'index.html')
+        return redirect('homepage')   
     else: 
         return HttpResponseForbidden("You do not have permission to delete this user")

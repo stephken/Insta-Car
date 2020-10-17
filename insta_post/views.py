@@ -1,11 +1,14 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse, get_object_or_404, redirect
 from django.http import HttpResponseForbidden, HttpResponse
-from insta_user.models import InstaUser
-from insta_post.models import FavoriteCar, Comment
-from insta_post.forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.generic import TemplateView
+from insta_user.models import InstaUser
+from insta_post.models import FavoriteCar
+from insta_comment.models import Comment
+from insta_post.forms import PostForm
+from insta_comment.forms import CommentForm
+# from insta_comment.helpers import add_one
 
 class IndexView(TemplateView):
   
@@ -32,6 +35,7 @@ def post_form_view(request):
     form = PostForm()
     return render(request, "yearmakemodel.html", {"form": form})
 
+
 def post_edit_view(request, post_id):
     post = FavoriteCar.objects.get(id=post_id)
     if post.poster == request.user:
@@ -52,22 +56,6 @@ def post_edit_view(request, post_id):
         return render(request, "yearmakemodel.html", {'form': form})
     else: 
         return HttpResponseForbidden("You do not have permission to edit this post")
-    
-
-def comment_form_view(request, post_id):
-    post = get_object_or_404(FavoriteCar, id=post_id)
-    if request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.commenter = request.user
-            comment.save()
-            return redirect('post', post.id)
-    else:
-        form = CommentForm()
-    return render(request, "comment_form.html", {'form': form})
 
 
 def photo_detail(request, post_id):
@@ -80,14 +68,8 @@ def photo_detail(request, post_id):
 
 def up_vote(request, post_id):
     vote = FavoriteCar.objects.get(id=post_id)
-    vote.total_votes += 1
-    vote.save()
-    return redirect(request.META.get('HTTP_REFERER'))
-
-
-def down_vote(request, post_id):
-    vote = FavoriteCar.objects.get(id=post_id)
-    vote.total_votes -= 1
+    # call helper function here
+    vote.up_votes += 1
     vote.save()
     return redirect(request.META.get('HTTP_REFERER'))
 
@@ -99,33 +81,7 @@ def del_post(request, post_id):
         return redirect('profile', request.user.username)
     else: 
         return HttpResponseForbidden("You do not have permission to delete this post")
-
-
-def del_comment(request, pk):
-    comment = Comment.objects.filter(pk=pk).first()
-    if request.user.id == comment.commenter.id or request.user.id == comment.post.poster.id:
-        comment.delete()
-        return redirect('post', comment.post.id)
-    else: 
-        return HttpResponseForbidden("You do not have permission to delete this comment")
-
-
-def edit_comment(request, pk):
-    comment = get_object_or_404(Comment, pk=pk) 
-    if request.user.id == comment.commenter.id:
-        if request.method == "POST":
-            form = CommentForm(request.POST, instance=comment)
-            if form.is_valid():
-                data = form.cleaned_data
-                comment.content = data.get('content')
-                comment.save()
-                return redirect('post', comment.post.id)
-        else:
-            form = CommentForm(instance=comment)
-        return render(request, 'comment_form.html', {'form': form})
-    else: 
-        return HttpResponseForbidden("You do not have permission to edit this comment")
-        
+     
 
 class FollowView(TemplateView):
     def get(self, request, follow_id):
@@ -139,8 +95,9 @@ class UnfollowView(TemplateView):
     def get(self, request, unfollow_id):
         signed_in_user = request.user
         unfollow = InstaUser.objects.filter(id=unfollow_id).first()
-        signed_in_user.following.add(unfollow)
+        signed_in_user.following.remove(unfollow)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
 
 def handler404(request, exception):
     return render(request, '404.html', status=404)

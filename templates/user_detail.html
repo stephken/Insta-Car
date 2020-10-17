@@ -39,7 +39,14 @@
       <div class="row">
         <div class="d-flex justify-content-start">
         <p class="h1">{{ info.username }}</p>
+        {% if request.user.id != info.id %}
+        {% if info in user_following %}
+        <p class="h1 ml-5 "><a href="/unfollowing/{{info.id}}/" type="button" class="btn btn-primary mx-auto btn-lg ">Unfollow</a></p>
+        {% else %}
         <p class="h1 ml-5 "><a href="/following/{{info.id}}/" type="button" class="btn btn-primary mx-auto btn-lg ">Follow</a></p>
+{% endif %}
+{% endif %}
+
         </div>
       </div>
   
