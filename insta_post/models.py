@@ -18,12 +18,3 @@ class FavoriteCar(models.Model):
     def __str__(self):
         return "InstaCar Post #: " + str(self.id) + " -- " + self.year + " " + self.make + " " +  self.model
 
-
-class Comment(models.Model):
-    post = models.ForeignKey(
-        FavoriteCar, on_delete=models.CASCADE, related_name='comments')
-    commenter = models.ForeignKey(
-        InstaUser, on_delete=models.CASCADE, related_name="commenter")
-    content = models.CharField(max_length=280, verbose_name="comment")
-    created_on = models.DateTimeField(auto_now_add=True)
-    up_votes = models.IntegerField(default=0)

@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'authentication',
     'insta_user',
     'insta_post',
+    'insta_comment'
 ]
 
 MIDDLEWARE = [
