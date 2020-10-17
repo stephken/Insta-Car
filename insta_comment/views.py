@@ -1,13 +1,14 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse, get_object_or_404, redirect
 from django.http import HttpResponseForbidden
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from insta_user.models import InstaUser
 from insta_post.models import FavoriteCar
 from insta_comment.models import Comment
 from insta_post.forms import PostForm
 from insta_comment.forms import CommentForm
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-# from django.views.generic import TemplateView
+# from insta_comment.helpers import add_one
+
 
 def comment_form_view(request, post_id):
     post = get_object_or_404(FavoriteCar, id=post_id)

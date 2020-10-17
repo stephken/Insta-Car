@@ -1,13 +1,14 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse, get_object_or_404, redirect
 from django.http import HttpResponseForbidden, HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.views.generic import TemplateView
 from insta_user.models import InstaUser
 from insta_post.models import FavoriteCar
 from insta_comment.models import Comment
 from insta_post.forms import PostForm
 from insta_comment.forms import CommentForm
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.views.generic import TemplateView
+# from insta_comment.helpers import add_one
 
 class IndexView(TemplateView):
   
@@ -67,7 +68,7 @@ def photo_detail(request, post_id):
 
 def up_vote(request, post_id):
     vote = FavoriteCar.objects.get(id=post_id)
-    # call function here
+    # call helper function here
     vote.up_votes += 1
     vote.save()
     return redirect(request.META.get('HTTP_REFERER'))
