@@ -1,9 +1,10 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse
 from django.http import HttpResponse
+from django.views.generic import TemplateView
 from django.contrib.auth import login, logout, authenticate
 from insta_user.models import InstaUser
 from authentication.forms import SignUpForm, LoginForm
-from django.views.generic import TemplateView
+
 
 
 def signup_view(request):

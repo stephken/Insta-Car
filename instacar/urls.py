@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from authentication.views import signup_view, logout_view, LoginView
 from insta_user.views import profile_edit_view, del_user, profile_view
 from insta_post import views
+from insta_search.views import SearchResultsView
 from insta_comment.views import comment_form_view, del_comment, edit_comment, comment_likes
 from django.views.generic import TemplateView
 from django.views.defaults import page_not_found, server_error
@@ -26,6 +27,7 @@ urlpatterns = [
     path('comment/<int:pk>/like/', comment_likes, name='like'),
     path('following/<int:follow_id>/', views.FollowView.as_view()),
     path('unfollowing/<int:unfollow_id>/', views.UnfollowView.as_view()),
+    path('search/', SearchResultsView.as_view(), name='search_results'),
     path('500/', TemplateView.as_view(template_name="500.html")),
     path('404/', TemplateView.as_view(template_name="404.html")),
     path('admin/', admin.site.urls),
