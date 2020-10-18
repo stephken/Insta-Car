@@ -16,8 +16,9 @@ class IndexView(TemplateView):
         # Do not change this objects.all!!!! Rubric item!!!
         cars = FavoriteCar.objects.all()
         return render(request, "index.html", {"cars": cars})
-      
 
+
+# @login_required
 def post_form_view(request):
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
@@ -36,6 +37,7 @@ def post_form_view(request):
     return render(request, "yearmakemodel.html", {"form": form})
 
 
+# @login_required
 def post_edit_view(request, post_id):
     post = FavoriteCar.objects.get(id=post_id)
     if post.poster == request.user:
@@ -58,6 +60,7 @@ def post_edit_view(request, post_id):
         return HttpResponseForbidden("You do not have permission to edit this post")
 
 
+# @login_required
 def photo_detail(request, post_id):
     car = get_object_or_404(FavoriteCar, id=post_id)
     poster_id = car.poster.id
@@ -66,6 +69,7 @@ def photo_detail(request, post_id):
     return render(request, 'photo_detail.html', {'car': car, "comment_list": comment_list, "info": profile_info})
 
 
+# @login_required
 def up_vote(request, post_id):
     vote = FavoriteCar.objects.get(id=post_id)
     # call helper function here
@@ -74,6 +78,7 @@ def up_vote(request, post_id):
     return redirect(request.META.get('HTTP_REFERER'))
 
 
+# @login_required
 def del_post(request, post_id):
     post = FavoriteCar.objects.get(id=post_id)
     if request.user.id == post.poster.id:
@@ -83,6 +88,7 @@ def del_post(request, post_id):
         return HttpResponseForbidden("You do not have permission to delete this post")
      
 
+# @login_required
 class FollowView(TemplateView):
     def get(self, request, follow_id):
         signed_in_user = InstaUser.objects.filter(username=request.user.username).first()
@@ -91,7 +97,7 @@ class FollowView(TemplateView):
             signed_in_user.following.add(follow)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-
+# @login_required
 class UnfollowView(TemplateView):
     def get(self, request, unfollow_id):
         signed_in_user = request.user

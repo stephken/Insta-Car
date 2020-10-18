@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% block nav %} {% include 'navbar.html'%}{%endblock%}
+{% block content %} {% if object_list %}
+<h1>Search Results</h1>
+
+<ul>
+  {% for car in object_list %}
+  <li>{{ car.make }}, {{ car.model }}</li>
+  {% endfor %}
+</ul>
+
+{% else %}
+
+<h1>There are no InstaCars by that name</h1>
+{% endif %} {% endblock %}
