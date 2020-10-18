@@ -23,15 +23,15 @@ def post_form_view(request):
         form = PostForm(request.POST, request.FILES)
         if 'car_image' not in request.FILES:
             return HttpResponse("Please select a photo")
-        FavoriteCar.objects.create(
+        new_post = FavoriteCar.objects.create(
             poster=request.user, 
             make=request.POST['make'], 
             model=request.POST['model'], 
             year=request.POST['year'], 
             color=request.POST['color'], 
             caption=request.POST['caption'], 
-            car_image=request.FILES['car_image'])  
-        return HttpResponseRedirect(reverse("homepage"))
+            car_image=request.FILES['car_image']) 
+        return redirect('post', new_post.pk)
     form = PostForm()
     return render(request, "yearmakemodel.html", {"form": form})
 
@@ -87,7 +87,8 @@ class FollowView(TemplateView):
     def get(self, request, follow_id):
         signed_in_user = InstaUser.objects.filter(username=request.user.username).first()
         follow = InstaUser.objects.filter(id=follow_id).first()
-        signed_in_user.following.add(follow)
+        if follow_id != request.user.id:
+            signed_in_user.following.add(follow)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
