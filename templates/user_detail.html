@@ -9,7 +9,8 @@
     <h2>The user you are looking for does not exist</h2>
     {% else %}
     <div class="row" id="profiletop">
-      <div class="col-4 prof">
+
+      <div class="col-4 prof" id="photo">
         {% if info.profile_image %}
       <img
         id="profile-pic"
@@ -27,6 +28,7 @@
       />
       {% endif %}
       </div>
+
       <div class="col-8">
         <div class="row">
         {% if request.user.id == info.id %}
@@ -39,6 +41,7 @@
       <div class="row">
         <div class="d-flex justify-content-start">
         <p class="h1">{{ info.username }}</p>
+
         {% if request.user.id != info.id %}
         {% if info in user_following %}
         <p class="h1 ml-5 "><a href="/unfollowing/{{info.id}}/" type="button" class="btn btn-primary mx-auto btn-lg ">Unfollow</a></p>
@@ -49,8 +52,6 @@
 
         </div>
       </div>
-  
-  </br>
       
   <div class="row">
     <div class="d-flex justify-content-end">
@@ -64,13 +65,10 @@
     {% else %}
     <p class="h4 ml-5 mr-5">{{ info.following.all.count }} Following</p>
     {% endif %}
-    {% if count < 2%}
-    <p class="h4 ml-5 mr-5">0 Followers</p>
-    {% else %}
-    <p class="h4 ml-5 mr-5">0 Followers</p>
-    {% endif %}
+    
     </div>  
   </div>
+  
   <div class="row">
     <p class="h3">About {{info.username}}</p>
   </div>
@@ -78,10 +76,12 @@
     <p class="h5 ml-2">{{info.bio}}</p>
   </div>
   <div class="row">
-    <p class="h5 ml-4 mr-5"><a href={{info.website}}>{{info.website}}</a></p>
-    <p class="h6 ml-5">InstaCar member since: {{ info.joined_date }}</p>
+    <p class="h5 mr-5"><a href={{info.website}}>{{info.website}}</a></p>  
   </div>
+    <div class="row">
+    <p class="h6 ">InstaCar member since: {{ info.joined_date }}</p>
   </div>
+
   
 </div>
 </br>
