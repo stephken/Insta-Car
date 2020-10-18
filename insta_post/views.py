@@ -87,7 +87,8 @@ class FollowView(TemplateView):
     def get(self, request, follow_id):
         signed_in_user = InstaUser.objects.filter(username=request.user.username).first()
         follow = InstaUser.objects.filter(id=follow_id).first()
-        signed_in_user.following.add(follow)
+        if follow_id != request.user.id:
+            signed_in_user.following.add(follow)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
