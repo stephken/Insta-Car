@@ -23,15 +23,15 @@ def post_form_view(request):
         form = PostForm(request.POST, request.FILES)
         if 'car_image' not in request.FILES:
             return HttpResponse("Please select a photo")
-        FavoriteCar.objects.create(
+        new_post = FavoriteCar.objects.create(
             poster=request.user, 
             make=request.POST['make'], 
             model=request.POST['model'], 
             year=request.POST['year'], 
             color=request.POST['color'], 
             caption=request.POST['caption'], 
-            car_image=request.FILES['car_image'])  
-        return HttpResponseRedirect(reverse("homepage"))
+            car_image=request.FILES['car_image']) 
+        return redirect('post', new_post.pk)
     form = PostForm()
     return render(request, "yearmakemodel.html", {"form": form})
 

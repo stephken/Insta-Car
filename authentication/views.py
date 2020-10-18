@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse
+from django.http import HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from insta_user.models import InstaUser
 from authentication.forms import SignUpForm, LoginForm
@@ -13,6 +14,8 @@ def signup_view(request):
             new_user = InstaUser.objects.create_user(username=data.get("username"), password=data.get("password"), bio=data.get("bio"), website=data.get("website"), profile_image=data.get("profile_image"))
             login(request, new_user)
             return HttpResponseRedirect(reverse("homepage"))  
+        else:
+            return HttpResponse(form.errors.values())
     form = SignUpForm()
     return render(request, 'generic_form.html', {"form": form})
   
