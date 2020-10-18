@@ -2,11 +2,29 @@
 {% block content %} {% if object_list %}
 <h1>Search Results</h1>
 
-<ul>
-  {% for car in object_list %}
-  <li>{{ car.make }}, {{ car.model }}</li>
-  {% endfor %}
-</ul>
+<div class="container">
+  <div class="d-flex justify-content-start flex-wrap white">
+    {% for car in object_list %} {% if car.car_image %}
+    <a href="/post/{{car.id}}/">
+      <img
+        class="img-thumbnail m-auto"
+        src="{{ car.car_image.url }}"
+        alt="{{ car.model }}"
+        style="width: 277px; height: 277px"
+      />
+    </a>
+    {% else %}
+    <a href="/post/{{car.id}}/">
+      <img
+        class="img-thumbnail"
+        src="/static/images/fillerphoto.png"
+        alt="{{ car.model }}"
+        style="width: 277px; height: 277px"
+      />
+    </a>
+    {% endif %} {% endfor %}
+  </div>
+</div>
 
 {% else %}
 
