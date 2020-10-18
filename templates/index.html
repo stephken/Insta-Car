@@ -1,5 +1,5 @@
-{% extends "base.html" %} {% block nav %}
-{% include 'navbar.html' %} {% endblock %} {% block content %}
+{% extends "base.html" %} {% block nav %} {% include 'navbar.html' %}
+{%endblock%} {% block content %}
 
 <div class="container">
   <div class="d-flex justify-content-start flex-wrap white">
@@ -13,13 +13,14 @@
       />
     </a>
     {% else %}
-
-    <img
-      class="img-thumbnail"
-      src="/static/images/fillerphoto.png"
-      alt="{{ car.model }}"
-      style="width: 277px; max-height: 277px"
-    />
+    <a href="/post/{{car.id}}/">
+      <img
+        class="img-thumbnail"
+        src="/static/images/fillerphoto.png"
+        alt="{{ car.model }}"
+        style="width: 277px; max-height: 277px"
+      />
+    </a>
     {% endif %} {% endfor %}
   </div>
 </div>
