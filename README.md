@@ -53,6 +53,8 @@ Thank you to my family -- Mum and Dad, Justine and Chris, and Craig, Shalini, Il
 
 Lori:
 
+Thanks to my parents who supported me throughout my Kenzie career.  Special shoutouts to my Kenzie family who supported me and helped me grow, not only as an individual, but as a software developer.  I wouldn't be where I am if it wasn't for all of them.
+
 Ken:
 
 John:
