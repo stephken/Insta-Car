@@ -16,16 +16,8 @@
   background-color: rgb(211, 211, 211);
 }
 #profiletop {
-  min-height: 400px;
-  display: flex;
-  flex-wrap: wrap;
+  height: 400px;
 }
-@media only screen and (max-width: 1000px) {
-  #photo {
-    margin-right: 1px;
-  }
-}
-
 .thick {
   border: 5px solid #337ab7;
   padding: 15px;

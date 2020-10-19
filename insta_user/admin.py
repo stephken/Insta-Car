@@ -5,6 +5,6 @@ from insta_user.models import InstaUser, UserEmail
 admin.site.register(InstaUser, UserAdmin)
 admin.site.register(UserEmail)
 
-UserAdmin.fieldsets += ('Custom fields set', {'fields': ('bio',)}),
+UserAdmin.fieldsets += ('Custom fields set', {'fields': ('bio', 'following')}),
 
 

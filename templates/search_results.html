@@ -1,17 +1,10 @@
-{% extends "base.html" %} {% block nav %} {% include 'navbar.html' %}
-{%endblock%} {% block content %}
-
-<br />
-<div>
-  <form action="{% url 'search_results' %}" method="get">
-    <input name="q" type="text" placeholder="Search for a model..." />
-  </form>
-</div>
-<br />
+{% extends "base.html" %} {% block nav %} {% include 'navbar.html'%}{%endblock%}
+{% block content %} {% if object_list %}
+<h1>Search Results</h1>
 
 <div class="container">
   <div class="d-flex justify-content-start flex-wrap white">
-    {% for car in cars %} {% if car.car_image %}
+    {% for car in object_list %} {% if car.car_image %}
     <a href="/post/{{car.id}}/">
       <img
         class="img-thumbnail m-auto"
@@ -33,4 +26,7 @@
   </div>
 </div>
 
-{% endblock %}
+{% else %}
+
+<h1>There are no InstaCars by that name</h1>
+{% endif %} {% endblock %}

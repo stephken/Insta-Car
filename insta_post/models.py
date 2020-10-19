@@ -10,8 +10,6 @@ class FavoriteCar(models.Model):
     color = models.CharField(max_length=30)
     time_posted = models.DateTimeField(auto_now=True)
     up_votes = models.IntegerField(default=0)
-    down_votes = models.IntegerField(default=0)
-    total_votes = models.IntegerField(default=0)
     car_image = models.ImageField(upload_to='images/', null=True, blank=True)
     poster = models.ForeignKey(
         InstaUser, on_delete=models.CASCADE, related_name="poster")
@@ -20,11 +18,3 @@ class FavoriteCar(models.Model):
     def __str__(self):
         return "InstaCar Post #: " + str(self.id) + " -- " + self.year + " " + self.make + " " +  self.model
 
-
-class Comment(models.Model):
-    post = models.ForeignKey(
-        FavoriteCar, on_delete=models.CASCADE, related_name='comments')
-    commenter = models.ForeignKey(
-        InstaUser, on_delete=models.CASCADE, related_name="commenter")
-    content = models.CharField(max_length=280)
-    created_on = models.DateTimeField(auto_now_add=True)
