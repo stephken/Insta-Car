@@ -1,14 +1,17 @@
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, reverse, redirect
 from django.http import HttpResponseForbidden
 from django.contrib import messages
+from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from insta_user.models import InstaUser
 from insta_post.models import FavoriteCar
 from insta_user.forms import EditProfileForm
 
+
 def index(request):
     data = InstaUser.objects.all()
     return render(request, "index.html", {'data': data})
+
 
 # @login_required
 def profile_view(request, username):
@@ -23,6 +26,7 @@ def profile_view(request, username):
     context_dict['count'] = count
     context_dict['user_following'] = user_following
     return render(request, "user_detail.html", context_dict)
+
 
 # @login_required
 def profile_edit_view(request, username):
@@ -42,6 +46,7 @@ def profile_edit_view(request, username):
     form = EditProfileForm()
     return render(request, 'profile_form.html', {'form': form} )
 
+
 # @login_required
 def del_user(request, username):    
     u = InstaUser.objects.get(username=username)
@@ -53,3 +58,22 @@ def del_user(request, username):
         return redirect('homepage')   
     else: 
         return HttpResponseForbidden("You do not have permission to delete this user")
+
+
+# @login_required
+class FollowView(TemplateView):
+    def get(self, request, follow_id):
+        signed_in_user = InstaUser.objects.filter(username=request.user.username).first()
+        follow = InstaUser.objects.filter(id=follow_id).first()
+        if follow_id != request.user.id:
+            signed_in_user.following.add(follow)
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+# @login_required
+class UnfollowView(TemplateView):
+    def get(self, request, unfollow_id):
+        signed_in_user = request.user
+        unfollow = InstaUser.objects.filter(id=unfollow_id).first()
+        signed_in_user.following.remove(unfollow)
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
